@@ -1,0 +1,20 @@
+{
+  "name": "taller-task-assesment",
+  "version": "1.0.0",
+  "description": "Create a simple decentralized application (dApp) that allows users to submit and view governance proposals. The application should have a frontend built with Next.js and TypeScript, and it should interact with a smart contract deployed on a test Ethereum network (e.g., Rinkeby, Goerli or Sepolia). The smart contract should allow users to create proposals and retrieve a list of all proposals.\r ### Requirements",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox-viem": "^3.0.0",
+    "hardhat": "^2.22.19"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "viem": "^2.26.2"
+  }
+}

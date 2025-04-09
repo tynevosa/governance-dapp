@@ -8,18 +8,15 @@ export function useWallet() {
   // Function to connect the wallet
   const connectWallet = async () => {
     if (!connected) {
-      if (window.ethereum == null) {
-        // MetaMask is not installed
-        alert("MetaMask not installed");
-      } else {
+      if (typeof window !== "undefined" && "ethereum" in window) {
         try {
           // Connect to the Sepolia network by requesting the user to switch the network in their wallet (e.g., MetaMask)
-          const provider = new ethers.BrowserProvider(window.ethereum); // for browser-based providers
+          const provider = new ethers.BrowserProvider((window as any).ethereum); // for browser-based providers
 
           // Check if the wallet is connected to Sepolia, otherwise prompt to switch networks
           const network = await provider.getNetwork();
           if (network.name !== "sepolia") {
-            await window.ethereum.request({
+            await (window as any).ethereum.request({
               method: "wallet_switchEthereumChain",
               params: [{ chainId: "0xaa36a7" }], // Sepolia network ID
             });
@@ -36,6 +33,9 @@ export function useWallet() {
         } catch (error) {
           console.error("Error connecting to Sepolia network:", error);
         }
+      } else {
+        // MetaMask is not installed
+        alert("MetaMask not installed");
       }
     }
   };

@@ -23,12 +23,9 @@ export function useContract({ address, abi }: UseContractProps) {
       let _signer = null;
 
       // Check if MetaMask is installed
-      if (window.ethereum == null) {
-        // MetaMask is not installed, use json rpc provider
-        _provider = new ethers.JsonRpcProvider(SEPOLIA_RPC_URL);
-      } else {
+      if (typeof window !== "undefined" && "ethereum" in window) {
         // MetaMask is installed, use BrowserProvider to connect
-        _provider = new ethers.BrowserProvider(window.ethereum);
+        _provider = new ethers.BrowserProvider((window as any).ethereum);
 
         // Request the signer (user wallet) from MetaMask
         try {
@@ -36,6 +33,9 @@ export function useContract({ address, abi }: UseContractProps) {
         } catch (error) {
           console.error("User denied wallet access:", error);
         }
+      } else {
+        // MetaMask is not installed, use json rpc provider
+        _provider = new ethers.JsonRpcProvider(SEPOLIA_RPC_URL);
       }
 
       // Create contract instance
